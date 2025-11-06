@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/description.unity
+    guid: e8991b8430b16464d8a5f9b406533a97
+  - enabled: 1
+    path: Assets/Scenes/EyeTrackerreal.unity
+    guid: 378ae7afb6b62fc48a277228d588c278
+  - enabled: 1
+    path: Assets/Scenes/Fixation.unity
+    guid: 7797f6d49c841984cbeea6ac0c372eb0
+  - enabled: 1
+    path: Assets/Scenes/saccade.unity
+    guid: 55d91348b6ea15a4fb92cb0d36b26a34
+  - enabled: 1
+    path: Assets/Scenes/smoothpursuit.unity
+    guid: bb2a10842ead4704ea4aa38fc4944bd8
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9f4f5982f4c293e448e65afa990139e6, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 5957a8e55db5e0848b4130734708562c, type: 2}
