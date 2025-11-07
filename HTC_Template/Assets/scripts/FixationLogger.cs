@@ -11,13 +11,12 @@ public class FixationLogger : MonoBehaviour
     private float startTime;
     public string fileName;
 
+    public FederatedTrainer trainer;   // ✅ added: we’ll send JSON directly to Python via this
+
     [Header("Transforms (Eye + Head)")]
     public Transform leftEyeTransform;
     public Transform rightEyeTransform;
     public Transform centerEyeTransform;
-
-    public FederatedTrainer trainer;
-    
 
     void Awake()
     {
@@ -52,8 +51,9 @@ public class FixationLogger : MonoBehaviour
 
     void Start()
     {
-        if (trainer == null)
-            trainer = FindObjectOfType<FederatedTrainer>();
+        // ✅ ensure we have a trainer instance
+        if (trainer == null) trainer = FindObjectOfType<FederatedTrainer>();
+
         startTime = Time.time;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         Debug.Log($"📦 Logging started at: {filePath}");
@@ -86,23 +86,25 @@ public class FixationLogger : MonoBehaviour
             var wrapper = new FrameDataWrapper { frames = allFrames };
 
             string json = JsonUtility.ToJson(wrapper, true); // pretty print
-            File.WriteAllText(filePath, json);
 
-            Debug.Log($"✅ All scene data saved to {filePath}");
+            // (Optional) keep a debug copy on disk. Remove these two lines if you don't want any files.
+            // File.WriteAllText(filePath, json);
+            // Debug.Log($"✅ Session JSON written to {filePath}");
+
+            // ✅ DATA-ONLY: send the JSON string to Python (no file path)
             if (trainer != null)
             {
-                Debug.Log("[FL] Launching Flower client…");
-                trainer.TrainOnJson(filePath); // You’ll need to update this method in FederatedTrainer
+                Debug.Log("[FL] Launching Flower client (stdin, data-only) ...");
+                trainer.TrainOnJsonString(json);   // <-- this is the only behavioral change
             }
             else
             {
                 Debug.LogWarning("[FL] FederatedTrainer not found in scene.");
             }
-            
         }
         catch (Exception ex)
         {
-            Debug.LogError($"❌ Failed to save JSON: {ex.Message}");
+            Debug.LogError($"❌ Failed to save/send JSON: {ex.Message}");
         }
     }
 
