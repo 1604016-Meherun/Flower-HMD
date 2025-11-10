@@ -1,0 +1,13 @@
+flwr
+torch
+pandas
+scikit-learn
+numpy
+fastapi
+uvicorn
+flwr
+torch
+torchvision
+# Optional / dev-friendly extras (uncomment if needed)
+# matplotlib>=3.0.0  # plotting (not required by current code)
+# tqdm>=4.0.0       # progress bars
